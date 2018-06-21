@@ -4,7 +4,6 @@ import com.springboot.basics.model.Course;
 import com.springboot.basics.service.StudentService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +19,11 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = StudentContoller.class, secure = false)
@@ -48,7 +46,7 @@ public class StudentContollerTest {
 
         Mockito.when(studentService.retrieveCourse(Mockito.anyString(), Mockito.anyString())).thenReturn(mockCourse);
 
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/students/Student1/courses/Course1").accept(MediaType.APPLICATION_JSON);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/students/1/courses/Course1").accept(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
         String expected = "{\"id\":\"Course1\",\"name\":\"Spring\",\"description\":\"10\"}";
@@ -63,7 +61,7 @@ public class StudentContollerTest {
         mockCourses.add(mockCourse);
 
         Mockito.when(studentService.retrieveCourses(Mockito.anyString())).thenReturn(mockCourses);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/students/Student1}/courses").accept(MediaType.APPLICATION_JSON);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/students/1}/courses").accept(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
         String expected = "[{\"id\":\"Course1\",\"name\":\"Spring\",\"description\":\"10\",\"steps\":[\"Learn Maven\",\"Import Project\",\"First Example\",\"Second Example\"]}]";
@@ -76,7 +74,7 @@ public class StudentContollerTest {
     public void shouldAddNewCourse() throws Exception {
 
         Mockito.when(studentService.addCourse(Mockito.anyString(),Mockito.any(Course.class))).thenReturn(mockCourse);
-        MockHttpServletRequestBuilder postRequestBuilder = MockMvcRequestBuilders.post("/students/Student1/courses")
+        MockHttpServletRequestBuilder postRequestBuilder = MockMvcRequestBuilders.post("/students/1/courses")
                                                                                  .accept(MediaType.APPLICATION_JSON)
                                                                                  .content(exampleCourseJson)
                                                                                  .contentType(MediaType.APPLICATION_JSON);
@@ -84,7 +82,7 @@ public class StudentContollerTest {
         MockHttpServletResponse response = result.getResponse();
 
         assertEquals(HttpStatus.CREATED.value(), response.getStatus());
-        assertEquals("http://localhost/students/Student1/courses/Course1",
+        assertEquals("http://localhost/students/1/courses/Course1",
                 response.getHeader(HttpHeaders.LOCATION));
     }
 }

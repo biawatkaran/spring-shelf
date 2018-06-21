@@ -1,23 +1,19 @@
 package com.springboot.basics.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.util.List;
 import java.util.Objects;
 
-public class Student {
+public class StudentV2 {
 
     private Long id;
-    private String name;
+    private Name name;
     private String description;
-    private String passportNumber;
     private List<Course> courses;
 
-    public Student() {
+    public StudentV2() {
     }
 
-    public Student(Long id, String name, String description, List<Course> courses) {
+    public StudentV2(Long id, Name name, String description, List<Course> courses) {
 
         this.id = id;
         this.name = name;
@@ -29,7 +25,7 @@ public class Student {
         return id;
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 
@@ -45,7 +41,7 @@ public class Student {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
+        StudentV2 student = (StudentV2) o;
         return Objects.equals(id, student.id) &&
                 Objects.equals(name, student.name) &&
                 Objects.equals(description, student.description) &&

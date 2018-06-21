@@ -26,7 +26,39 @@ Misc
     DataService dataServiceMock                 SomeBusinessImpl businessImpl       SomeBusinessTest
 
     when(dataServiceMock.someMethod()).thenReturn(someValue)
+3. In spring boot tests we can have something similar
+
+    Unit Tests
+
+    <code>
+     @MockBean (for the service layer),                     @RunWith(SpringRunner.class)
+     @Autowired for MockMvc so to perform the execution     @WebMvcTest(value = LoginController.class, secure = false)
+    </code>
+
+    Integration Test
+
+    <code>
+    @RunWith(SpringRunner.class)
+    @SpringBootTest(classes = LoginApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+
+    @LocalServerPort
+    restTemplate.exchange(createURLWithPort("/login"), HttpMethod.GET, entity, String.class);
+    </code>
+4. We can also use @ConfigurationProperties("basic) as @Component with getter/setter, later can be used as @Autowired. Properties can be set in application.properties
+   such as basic.someVar=value. This is typesafe meaning spring will fail at startup time if allowed type of values are not filled in e.g. string being filled in int type
+5. Content-Type = content type of the body of the reqeuest, Accept =  expected content type of the response
+6. Ribbon is used for client side load balancing, Eureka is for registering the micro-services (Naming server), Feign for rest clients => scaling
+   Zipkin distributed tracing, Netflix gateway => visibility and monitoring
+   Spring cloud config server => configuration management
+   Hystrix => fault tolerance
 
 References:
 
-http://www.springboottutorial.com/unit-testing-for-spring-boot-rest-services
+Spring boot test: http://www.springboottutorial.com/unit-testing-for-spring-boot-rest-services
+
+App properties: https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+
+Swagger Definition: http://localhost:8080/v2/api-docs & http://localhost:8080/swagger-ui.html
+
+Rest API versioning: http://www.springboottutorial.com/spring-boot-versioning-for-rest-services
+

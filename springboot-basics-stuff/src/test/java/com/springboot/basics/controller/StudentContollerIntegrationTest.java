@@ -2,7 +2,6 @@ package com.springboot.basics.controller;
 
 import com.springboot.basics.SpringbootBasicsStuffApplication;
 import com.springboot.basics.model.Course;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import org.json.JSONException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
@@ -36,7 +34,7 @@ public class StudentContollerIntegrationTest {
 
         HttpEntity<String> entity = new HttpEntity<>(null,headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("/students/Student1/courses/Course1"), HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("/students/1/courses/Course1"), HttpMethod.GET, entity, String.class);
 
         String expected = "{\"id\":\"Course1\",\"name\":\"Spring\",\"description\":\"10 Steps\"}";
         JSONAssert.assertEquals(expected, response.getBody(), false);
@@ -49,7 +47,7 @@ public class StudentContollerIntegrationTest {
 
         HttpEntity<Course> entity = new HttpEntity<>(course, headers);
 
-        ResponseEntity<Course> response = restTemplate.exchange(createURLWithPort("/students/Student1/courses"), HttpMethod.POST, entity, Course.class);
+        ResponseEntity<Course> response = restTemplate.exchange(createURLWithPort("/students/1/courses"), HttpMethod.POST, entity, Course.class);
 
         String location = response.getHeaders().get(HttpHeaders.LOCATION).get(0);
         assertTrue(location.contains("/students/Student1/courses"));

@@ -30,11 +30,11 @@ public class StudentService {
                 "Pom.xml", "Build Life Cycle", "Parent POM",
                 "Importing into Eclipse"));
 
-        Student ranga = new Student("Student1", "Ranga Karanam",
+        Student ranga = new Student(1L, "Ranga Karanam",
                 "Hiker, Programmer and Architect", new ArrayList<>(Arrays
                 .asList(course1, course2, course3, course4)));
 
-        Student satish = new Student("Student2", "Satish T",
+        Student satish = new Student(2L, "Satish T",
                 "Hiker, Programmer and Architect", new ArrayList<>(Arrays
                 .asList(course1, course2, course3, course4)));
 
