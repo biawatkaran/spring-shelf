@@ -47,8 +47,21 @@ Misc
 4. We can also use @ConfigurationProperties("basic) as @Component with getter/setter, later can be used as @Autowired. Properties can be set in application.properties
    such as basic.someVar=value. This is typesafe meaning spring will fail at startup time if allowed type of values are not filled in e.g. string being filled in int type
 5. Content-Type = content type of the body of the reqeuest, Accept =  expected content type of the response
-6. Ribbon is used for client side load balancing, Eureka is for registering the micro-services (Naming server), Feign for rest clients => scaling
-   Zipkin distributed tracing, Netflix gateway => visibility and monitoring
+6. MS1 --calling--> MS2 We were hardcoding the MS2 url inside MS1 even by using Fiegn Proxy -> MS2
+
+   Scaling
+
+        *Feign* for rest clients => scaling
+        *Ribbon* is used for client side load balancing = In above call MS1 hard code the MS2 url so if more instance of MS2 raised
+                 we can't balance them or call the second MS2 instance because running or different port, hence ribbon come into picture.
+                 In application property file we can have forex-service.ribbon.listOfServers=localhost:8000,localhost:8001
+
+        *Eureka* is for registering the micro-services (Naming server). The above problem gets sorted out here, as we register MSs here
+
+   Monitoring & Visibility
+
+   Zipkin distributed tracing, Netflix gateway
+
    Spring cloud config server => configuration management
    Hystrix => fault tolerance
 
