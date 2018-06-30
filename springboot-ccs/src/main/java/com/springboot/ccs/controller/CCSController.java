@@ -1,5 +1,6 @@
 package com.springboot.ccs.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.springboot.ccs.model.CurrencyConversion;
 import com.springboot.ccs.service.CurrencyExchangeServiceProxy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class CCSController {
     @Autowired
     private CurrencyExchangeServiceProxy proxy;
 
+    @HystrixCommand(fallbackMethod = "fallback")
     @GetMapping("/currency-converter/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion convertCurrency(@PathVariable String from, @PathVariable String to, @PathVariable BigDecimal quantity){
 
@@ -39,6 +41,7 @@ public class CCSController {
 
     }
 
+    @HystrixCommand(fallbackMethod = "fallback")
     @GetMapping("/currency-converter-feign/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion convertCurrencyFeign(@PathVariable("from") String from, @PathVariable String to, @PathVariable BigDecimal quantity){
 
@@ -47,5 +50,10 @@ public class CCSController {
         return new CurrencyConversion(response.getId(), from, to, response.getConversionRate(), quantity,
                 quantity.multiply(response.getConversionRate()), response.getPort());
 
+    }
+
+    public CurrencyConversion fallback(String from, String to, BigDecimal quantity){
+
+        return new CurrencyConversion();
     }
 }

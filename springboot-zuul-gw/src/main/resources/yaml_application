@@ -1,0 +1,29 @@
+# zuul.routes.currency-conversion-service.path=/apic/**
+# zuul.routes.currency-conversion-service.serviceId=currency-conversion-servicezuul.ignoredServices=*
+# zuul.routes.currency-conversion-service=/apic/**
+# or
+# zuul.routes.ccs.path=/apic/**
+# zuul.routes.ccs.serviceId=currency-conversion-service
+# or (but will use only single url so not using ribbon load balancing
+# zuul.routes.ccs.path=/apic/**
+# zuul.routes.ccs.url=http://localhost:8100/ #currency-converter-feign/from/{from}/to/{to}/quantity/{quantity}
+
+spring:
+  application:
+    name: gateway-service
+
+server:
+  port: 8084
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka
+
+zuul:
+  ignoredServices: '*'
+  routes:
+    ccs:
+      path: /apic/**
+      serviceId: currency-conversion-service
+
