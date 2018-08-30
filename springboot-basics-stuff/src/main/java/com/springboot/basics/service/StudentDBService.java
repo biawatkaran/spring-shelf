@@ -25,9 +25,8 @@ public class StudentDBService {
 
         Optional<Student> student = studentRepository.findById(id);
 
-        if(!student.isPresent()){
-            throw new StudentNotFoundException("Student not found :" + id);
-        }
+        Optional.ofNullable(student)
+                .orElseThrow(() -> new StudentNotFoundException("Student not found :" + id));
 
         return student.get();
     }

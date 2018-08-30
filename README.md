@@ -17,6 +17,8 @@ Additional Information
 8. @Service to be used on service implementation which is not interacting with db directly
 9. on db models use @Entity @Table @Column @Id etc
 10. @Repository the class which calls db operations, with methods having @Transactional and defining isolation levels READ ONLY etc
+11. if we have two components implementing one interface. @Component(value="real") and second @Component(value="dummy"). inject different beans depending
+    upon application.properties file e.g. application.greetings : real, then inside controller @Resource(name="${application.greetings}) on private Interface variable;
 
 Misc
 1. mvn help:effective-settings, help:effective-pom, dependency:tree, dependency:sources, --debug
@@ -51,7 +53,8 @@ Misc
 
    Scaling
 
-        *Feign* for rest clients => scaling
+        *Feign* for rest clients => scaling. In feign implementation, we provide @FeignClient(name="forex-service" url="localhost:8000") inside
+                                             the proxy interface CurrencyExchangeServiceProxy to call FS. This is still not good as hard coded to only one service
         *Ribbon* is used for client side load balancing = In above call MS1 hard code the MS2 url so if more instance of MS2 raised
                  we can't balance them or call the second MS2 instance because running or different port, hence ribbon come into picture.
                  In application property file we can have forex-service.ribbon.listOfServers=localhost:8000,localhost:8001
@@ -60,10 +63,14 @@ Misc
 
    Monitoring & Visibility
 
-   Zipkin distributed tracing, Netflix gateway
+        Zipkin distributed tracing, Netflix gateway
 
-   Spring cloud config server => configuration management
-   Hystrix => fault tolerance
+   Configuration management
+
+        Spring cloud config server 
+   Fault Tolerance
+        
+        Hystrix
 
 References:
 
@@ -71,7 +78,7 @@ Spring boot test: http://www.springboottutorial.com/unit-testing-for-spring-boot
 
 App properties: https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 
-Swagger Definition: http://localhost:8080/v2/api-docs & http://localhost:8080/swagger-ui.html
+Swagger Definition: http://localhost:8080/v2/api-docs &  http://localhost:8080/swagger-ui.html
 
 Rest API versioning: http://www.springboottutorial.com/spring-boot-versioning-for-rest-services
 
