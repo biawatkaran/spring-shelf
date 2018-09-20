@@ -18,12 +18,14 @@
 	</properties>
 
 	<modules>
-		<module>spring-basics-stuff</module>
+		<!--<module>spring-basics-stuff</module>
 		<module>springboot-basics-stuff</module>
-		<module>springboot-login</module>
-		<module>springboot-ccs</module>
-		<module>springboot-forex</module>
-		<module>springboot-eureka</module>
+		<module>springboot-login</module>-->
+		<module>auth-server</module>
+		<module>registry-service</module>
+		<module>gateway-service</module>
+		<module>currency-convert-service</module>
+		<module>forex-service</module>
 	</modules>
 
 	<build>
