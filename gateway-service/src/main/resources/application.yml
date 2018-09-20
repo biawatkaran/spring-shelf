@@ -26,4 +26,8 @@ zuul:
     ccs:
       path: /apic/**
       serviceId: currency-conversion-service
+    forex:
+      path: /forex/**
+      serviceId: forex-service
+
 
